@@ -6,7 +6,7 @@ import requests
 print("Hello from Weather Checker!")
 
 # Reading API key from the external config file (config.json)
-with open("config.json") as f:
+with open("../config.json") as f:
     config = json.load(f)
 
 # Storing the API key for future use

@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "weather-checker"
+version = "0.1.0"
+description = ""
+authors = ["zoarsh <zoarsharvit@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+requests = "^2.32.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

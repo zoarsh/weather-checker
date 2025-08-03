@@ -1,16 +1,14 @@
 
 import json
 import requests
+import streamlit as st
 
 # Welcome message when lunching the Weather Checker app
 print("Hello from Weather Checker!")
 
 # Reading API key from the external config file (config.json)
-with open("../config.json") as f:
-    config = json.load(f)
+api_key = st.secrets["api_key"]
 
-# Storing the API key for future use
-API_KEY = config["api_key"]
 
 while True:
     user_city = input("Please enter your city name:\n")

@@ -1,9 +1,19 @@
+# ========================================
+# STREAMLIT APP: Weather Checker UI (app.py)
+# ========================================
+
 import streamlit as st
 
-# Step 1: Language selection
+# =============================
+# Language Selection
+# =============================
+
 language = st.selectbox("Select language / בחר שפה", ["English", "עברית"])
 
-# Step 2: Define multilingual text dictionary
+# ===================================
+# Define multilingual Text Dictionary
+# ===================================
+
 texts = {
     "English": {
         "title": "Weather App",
@@ -42,16 +52,33 @@ description_translations = {
     "mist": "ערפל",
 }
 
+
+# =============================
+# App Title and User Name Input
+# =============================
+
 st.title(texts[language]["title"])
 name = st.text_input(texts[language]["enter_name"], "")
+
+# ==================================
+# Welcome Message and App Description
+# ===================================
 
 if name:
     st.subheader(texts[language]["welcome"].format(name=name))
 
-#opening title
 st.markdown(texts[language]["description"])
 st.divider()
+
+# =============================
+# City Name for Weather Lookup
+# =============================
+
 user_city= st.text_input(texts[language]["ask_city"])
+
+# ======================================
+# Fetch and Display Weather Information
+# ======================================
 
 from main import load_api_key, fetch_weather, extract_weather_info
 

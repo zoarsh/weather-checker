@@ -1,23 +1,20 @@
 import json
 import requests
+import streamlit as st
 from datetime import datetime
 
 # =============================
 # CONFIGURATION: Load API Key
 # =============================
-def load_api_key(path="app/config.json"):
+def load_api_key():
     """
-    Load the OpenWeatherMap API key from a JSON configuration file.
-
-    Parameters:
-        path (str): Path to the configuration file (default is 'app/config.json').
+    Load the OpenWeatherMap API key from Streamlit secrets.
 
     Returns:
         str: The API key used for authenticating API requests.
     """
-    with open(path) as f:
-        config = json.load(f)
-    return config["api_key"]
+
+    return st.secrets["api_key"]
 
 # ====================
 #  Fetch Weather Data
@@ -120,7 +117,7 @@ def main():
       Main function to run the weather checker in console mode.
 
       - Prompts the user to enter a city name.
-      - Loads the API key from the config file.
+      - Loads the API key
       - Fetches weather data for the specified city.
       - If data is found, extracts relevant weather info and displays it.
       - Otherwise, informs the user the city was not found.

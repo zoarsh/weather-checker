@@ -36,7 +36,7 @@ def fetch_weather(city: str, api_key: str) -> dict | None:
         current_resp = requests.get(current_url)
         current_resp.raise_for_status()
     except requests.exceptions.RequestException as e:
-        st.error(f"Failed to fetch current weather: {e}")
+        #st.error(f"Failed to fetch current weather: {e}")
         return None
 
     current_data = current_resp.json()

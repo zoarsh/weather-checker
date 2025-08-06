@@ -12,7 +12,7 @@ To me, programming is not just a technical skill — it's a way to inform, empow
 Weather-checker is a simple and intuitive app built with Streamlit.
 It allows users to search for any city and instantly get real-time weather information – including temperature, description, and local time – pulled directly from the OpenWeatherMap API.
 
-🔗 [Live Demo](https://weather-checker-mpapkar57x25bdsshyvwtg.streamlit.app/)
+🔗 [Live Demo](https://weather-checker-nwxchh2zkgesjeahaciq9j.streamlit.app/)
 
 ---
 

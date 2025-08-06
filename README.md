@@ -21,8 +21,14 @@ It allows users to search for any city and instantly get real-time weather infor
 - 🌤️ Current weather for any city in the world
 - 🌍 Local time based on city location
 - 🧭 Dynamic icons and weather descriptions
+- 🔮 Expandable to 5-day forecast with 3-hour intervals
 - 💾 Configurable settings (saved in JSON)
 - 🎯 Clean project structure with Poetry
+- 📋 Multi-language support: English and Hebrew interface
+- 🖌️ Custom UI design: Streamlit layout, color styling and emoji headers
+- 📡 Forecast-ready structure: app supports hourly and future forecasts (via OpenWeatherMap)
+- 🧪 Fully tested and validated API pipeline
+
 
 ---
 
@@ -43,16 +49,21 @@ It allows users to search for any city and instantly get real-time weather infor
 git clone https://github.com/your-username/weather-checker.git
 cd weather-checker
 poetry install
-poetry run streamlit run app/main.py
+poetry poetry run streamlit run app/app.py
+
 ```
 
 ## Final Notes
 This project was created as part of a hands-on data science course.
 
-It reflects my ability to:
+It demonstrates my ability to:
 - Build full-stack apps with external API integration
 - Use modern tools like Streamlit, Poetry, and Git
 - Work independently while maintaining clean, scalable code
+
+## License
+This project is open-source .
+
 
 Thanks for visiting!
 Feel free to explore the code or contact me with any suggestions or questions!

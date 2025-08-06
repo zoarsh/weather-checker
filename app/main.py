@@ -117,7 +117,7 @@ def main():
       Main function to run the weather checker in console mode.
 
       - Prompts the user to enter a city name.
-      - Loads the API key from the config file.
+      - Loads the API key
       - Fetches weather data for the specified city.
       - If data is found, extracts relevant weather info and displays it.
       - Otherwise, informs the user the city was not found.

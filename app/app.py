@@ -199,11 +199,9 @@ user_city = city
 api_key = load_api_key()
 
 if clicked:
-    print("Button clicked!")
-
     # API Response and data extraction
     data = fetch_weather(user_city, api_key)
-    print("API response:", data)
+    st.write("API response:", data)
     if data:
         weather_info = extract_weather_info(data)
 

@@ -36,7 +36,7 @@ def fetch_weather(city: str, api_key: str) -> dict | None:
         current_resp = requests.get(current_url)
         current_resp.raise_for_status()
     except requests.exceptions.RequestException as e:
-        print("Failed to fetch current weather:", e)
+        st.error(f"Failed to fetch current weather: {e}")
         return None
 
     current_data = current_resp.json()
@@ -54,7 +54,7 @@ def fetch_weather(city: str, api_key: str) -> dict | None:
         forecast_resp = requests.get(forecast_url)
         forecast_resp.raise_for_status()
     except requests.exceptions.RequestException as e:
-        print("Failed to fetch forecast:", e)
+        st.error(f"Failed to fetch forecast weather: {e}")
         return None
 
     forecast_data = forecast_resp.json()
@@ -128,7 +128,9 @@ def main():
     while True:
         user_city = input("\nPlease enter your city name:\n")
         data = fetch_weather(user_city, api_key)
-        print(data)
+        if data is None:
+            st.error("Failed to fetch weather data! Please check the city name or try again later.")
+            st.stop()
 
         if data:
             weather_info = extract_weather_info(data)

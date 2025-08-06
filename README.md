@@ -12,7 +12,7 @@ To me, programming is not just a technical skill — it's a way to inform, empow
 Weather-checker is a simple and intuitive app built with Streamlit.
 It allows users to search for any city and instantly get real-time weather information – including temperature, description, and local time – pulled directly from the OpenWeatherMap API.
 
-🔗 [Live Demo](https://your-demo-link-here.com)
+🔗 [Live Demo](https://weather-checker-mpapkar57x25bdsshyvwtg.streamlit.app/)
 
 ---
 
@@ -39,17 +39,30 @@ It allows users to search for any city and instantly get real-time weather infor
 - **Requests** – for handling external API calls
 - **Poetry** – for dependency and project management
 - **JSON** – for saving and loading configuration
-- **Version control with Git & GitHub**
+- **Version control** - Git & GitHub
 
 ---
 
 ## 🚀 How to Run Locally
 
-```bash
-git clone https://github.com/your-username/weather-checker.git
-cd weather-checker
-poetry install
-poetry poetry run streamlit run app/app.py
+Follow these steps to run the app on your local machine:
+
+1. **Clone the repository**  
+   Open your terminal and run:
+    ```bash
+    git clone https://github.com/your-username/weather-checker.git
+    cd weather-checker
+2. **Install dependencies with Poetry**
+    Make sure Poetry is installed, then run:
+    poetry install
+3. **Add your OpenWeatherMap API key**
+    Create a file named .streamlit/secrets.toml in the root directory and paste your API key inside:
+    api_key = "YOUR_API_KEY_HERE"
+4. **Run the app**
+    Use the following command to start the app:
+    poetry run streamlit run app/app.py
+5. **Open the app in your browser**
+    Streamlit will provide a local URL (usually http://localhost:8501) – just click it or paste it into your browser.
 
 ```
 

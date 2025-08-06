@@ -1,6 +1,6 @@
 import json
 import requests
-
+from datetime import datetime
 
 # =============================
 # CONFIGURATION: Load API Key
@@ -19,55 +19,78 @@ def load_api_key(path="app/config.json"):
         config = json.load(f)
     return config["api_key"]
 
-
-# =============================
-# API REQUEST: Fetch Weather Data
-# =============================
-def fetch_weather(city, api_key):
+# ====================
+#  Fetch Weather Data
+# ====================
+def fetch_weather(city: str, api_key: str) -> dict | None:
     """
-       Fetch weather data from the OpenWeatherMap API for a specific city.
+    Fetch current weather and 5-day forecast (3-hour intervals) for a specific city.
+    """
+    # Current weather
+    current_url = (
+        f"http://api.openweathermap.org/data/2.5/weather"
+        f"?q={city}"
+        f"&units=metric"
+        f"&appid={api_key}"
+    )
 
-       Parameters:
-           city (str): The name of the city to retrieve weather data for.
-           api_key (str): The API key used for authentication.
-
-       Returns:
-           dict or None: The API response as a dictionary if successful, or None if the request fails.
-       """
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city.lower()}&appid={api_key}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
+    # Request Validation
+    try:
+        current_resp = requests.get(current_url)
+        current_resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print("Failed to fetch current weather:", e)
         return None
 
+    current_data = current_resp.json()
+
+    # 5-day forecast
+    forecast_url = (
+        f"http://api.openweathermap.org/data/2.5/forecast"
+        f"?q={city}"
+        f"&units=metric"
+        f"&appid={api_key}"
+    )
+
+    # Request Validation
+    try:
+        forecast_resp = requests.get(forecast_url)
+        forecast_resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print("Failed to fetch forecast:", e)
+        return None
+
+    forecast_data = forecast_resp.json()
+
+    return {
+        "city":        current_data["name"],
+        "country":     current_data["sys"]["country"],
+        "temperature": current_data["main"]["temp"],
+        "description": current_data["weather"][0]["description"],
+        "humidity":    current_data["main"]["humidity"],
+        "wind_speed":  current_data["wind"]["speed"],
+        "wind_deg":    current_data["wind"]["deg"],
+        "forecast":    forecast_data["list"],  # 3-hour segments
+    }
+
+
 
 # =============================
-# PROCESSING: Extract & Format Weather Data
+# Extract & Format Weather Data
 # =============================
 def extract_weather_info(data):
     """
-        Extract relevant weather information from the raw API response.
-
-        Parameters:
-            data (dict): Raw data returned from the weather API.
-
-        Returns:
-            dict: A dictionary containing extracted weather details (e.g., temperature, humidity, description, location).
-        """
-    city = data["name"]
-    country = data["sys"]["country"]
-    description = data["weather"][0]["description"]
-    temp_k = data["main"]["temp"]
-    temp_celsius = round(temp_k - 273.15, 1)
-    humidity = data["main"]["humidity"]
-
+    Prepare weather information for display based on current + forecast data.
+    """
     return {
-        "city": city,
-        "country": country,
-        "description": description,
-        "temperature": temp_celsius,
-        "humidity": humidity
+        "city":        data.get("city", ""),
+        "country":     data.get("country", ""),
+        "temperature": data["temperature"],
+        "description": data["description"],
+        "humidity":    data["humidity"],
+        "wind_speed":  data["wind_speed"],
+        "wind_deg":    data["wind_deg"],
+        "forecast":    data.get("forecast", []),
     }
 
 
@@ -76,23 +99,22 @@ def extract_weather_info(data):
 # =============================
 def display_weather(info):
     """
-        Display the weather information in a user-friendly format.
+    Display current and 5-day forecast (every 3 hours).
+    """
+    print(f"\nWeather in {info['city']}, {info['country']}")
+    print(f"Now: {info['description']}, {info['temperature']}°C")
+    print(f"Humidity: {info['humidity']}% | Wind: {info['wind_speed']} km/h")
 
-        Parameters:
-            info (dict): A dictionary containing formatted weather information.
+    print("\n5-Day Forecast (3-hour intervals):")
+    for entry in info["forecast"][:10]:
+        dt = datetime.fromtimestamp(entry["dt"]).strftime("%a %H:%M")
+        temp = entry["main"]["temp"]
+        desc = entry["weather"][0]["description"]
+        print(f"{dt} | {desc} | {temp}°C")
 
-        Returns:
-            None
-        """
-    print(f"\nWeather in {info['city']}, {info['country']}:")
-    print(info['description'])
-    print(f"Temperature: {info['temperature']}°C")
-    print(f"Humidity: {info['humidity']}%")
-
-
-# =============================
+# =================
 # MAIN FUNCTION
-# =============================
+# =================
 def main():
     """
       Main function to run the weather checker in console mode.
@@ -109,6 +131,7 @@ def main():
     while True:
         user_city = input("\nPlease enter your city name:\n")
         data = fetch_weather(user_city, api_key)
+        print(data)
 
         if data:
             weather_info = extract_weather_info(data)
@@ -118,8 +141,8 @@ def main():
             print("City not found! Please try again.")
 
 
-# =============================
+# =============
 # RUN
-# =============================
+# =============
 if __name__ == "__main__":
     main()

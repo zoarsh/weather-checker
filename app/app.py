@@ -202,7 +202,10 @@ if clicked:
     # API Response and data extraction
     data = fetch_weather(user_city, api_key)
     #st.write("API response:", data)
-    if data:
+    if not data:
+        st.warning(f"⚠️ {texts[language]['not_found']}")
+        st.stop()
+    else:
         weather_info = extract_weather_info(data)
 
         # Display dynamic second title with weather emoji and city/country

@@ -101,7 +101,6 @@ def display_weather(info):
     print(f"\nWeather in {info['city']}, {info['country']}")
     print(f"Now: {info['description']}, {info['temperature']}°C")
     print(f"Humidity: {info['humidity']}% | Wind: {info['wind_speed']} km/h")
-
     print("\n5-Day Forecast (3-hour intervals):")
     for entry in info["forecast"][:10]:
         dt = datetime.fromtimestamp(entry["dt"]).strftime("%a %H:%M")
